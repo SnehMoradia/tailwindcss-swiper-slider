@@ -4,7 +4,12 @@ const plugin = require('tailwindcss/plugin');
  * TailwindCSS Swiper Custom Styling Plugin
  * Adds sleek modern styling presets for Swiper.js pagination, navigation, and scrollbars.
  */
-module.exports = plugin(function({ addComponents, addUtilities, theme }) {
+module.exports = plugin(function({ addComponents, addUtilities, addVariant, theme }) {
+  // Add custom Tailwind variants for Swiper slide states
+  addVariant('swiper-active', '&.swiper-slide-active');
+  addVariant('swiper-next', '&.swiper-slide-next');
+  addVariant('swiper-prev', '&.swiper-slide-prev');
+
   addComponents({
     // Navigation Styling (Beautiful circular glassmorphic controls)
     '.swiper-button-prev, .swiper-button-next': {
@@ -168,6 +173,28 @@ module.exports = plugin(function({ addComponents, addUtilities, theme }) {
     },
     '.swiper-theme-slate': {
       '--swiper-theme-color': theme('colors.slate.400', '#94a3b8'),
+    },
+    '.swiper-theme-cyan': {
+      '--swiper-theme-color': theme('colors.cyan.500', '#06b6d4'),
+    },
+    '.swiper-theme-orange': {
+      '--swiper-theme-color': theme('colors.orange.500', '#f97316'),
+    },
+    // Button size utilities
+    '.swiper-nav-sm .swiper-button-prev, .swiper-nav-sm .swiper-button-next': {
+      width: '2.25rem !important',
+      height: '2.25rem !important',
+    },
+    '.swiper-nav-lg .swiper-button-prev, .swiper-nav-lg .swiper-button-next': {
+      width: '3.75rem !important',
+      height: '3.75rem !important',
+    },
+    // Navigation position modifiers
+    '.swiper-nav-outside .swiper-button-prev': {
+      left: '-1.25rem !important',
+    },
+    '.swiper-nav-outside .swiper-button-next': {
+      right: '-1.25rem !important',
     },
   };
   
