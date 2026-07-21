@@ -1,32 +1,245 @@
-# React + TypeScript + Vite
+# 🚀 TailwindCSS Swiper Plugin
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A **declarative, zero-JS configuration** Tailwind CSS plugin for [Swiper.js](https://swiperjs.com/). 
 
-Currently, two official plugins are available:
+Easily create responsive, animated, themeable touch sliders using **pure Tailwind utility classes** directly on your HTML elements—no tedious JS option objects required!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-SnehMoradia%2Ftailwindcss--slider-181717?style=for-the-badge&logo=github)](https://github.com/SnehMoradia/tailwindcss-slider)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Tailwind%20Swiper%20Configurator-blue?style=for-the-badge&logo=vercel)](https://tailwindcss-slider.vercel.app/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Highlights
 
-## Expanding the Oxlint configuration
+* **🎯 Declarative utility-first configuration**: Configure loop, autoplay, responsive breakpoints, transitions, speed, and pagination using custom Tailwind classes.
+* **📱 Responsive Breakpoint Support**: Standard Tailwind screen prefixes (e.g. `md:swiper-slides-per-view-2 lg:swiper-slides-per-view-3`).
+* **🎨 Custom Color Themes**: Built-in dynamic theme classes (`swiper-theme-primary`, `swiper-theme-emerald`, `swiper-theme-rose`, `swiper-theme-violet`, `swiper-theme-amber`, `swiper-theme-indigo`, `swiper-theme-slate`).
+* **⚡ 3D & Transition Effects**: Full support for `slide`, `fade`, `coverflow`, `cards`, `cube`, `flip`, and `creative` transitions.
+* **⚛️ Framework Agnostic**: Works seamlessly with **HTML / Vite**, **React**, **Next.js**, **Vue**, or vanilla JS apps.
+* **🛠️ Interactive Dashboard & Configurator**: Ships with an interactive Vite + React playground dashboard to build, preview, and export copy-paste code snippets in real time!
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+---
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
+## 📦 Installation
+
+Install `swiper` and `tailwindcss-slider` in your project:
+
+```bash
+npm install swiper tailwindcss-slider
+```
+
+Add the plugin to your `tailwind.config.cjs` (or `tailwind.config.js`):
+
+```javascript
+// tailwind.config.cjs
+module.exports = {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
   },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+  plugins: [
+    require('tailwindcss-slider/plugin'),
+  ],
+};
+```
+
+---
+
+## ⚡ Quick Start
+
+### 1. HTML Markup (Declarative Utilities)
+
+Simply attach your slider configuration classes directly to the root `.swiper` element:
+
+```html
+<div class="swiper swiper-loop swiper-autoplay swiper-space-x-4 swiper-slides-per-view-1 md:swiper-slides-per-view-2 lg:swiper-slides-per-view-3 swiper-theme-primary w-full rounded-2xl">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide bg-slate-900 border border-slate-800 p-8 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-white mb-2">Slide 1</h3>
+      <p class="text-slate-400 text-sm">Zero JS configuration needed.</p>
+    </div>
+    <div class="swiper-slide bg-slate-900 border border-slate-800 p-8 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-white mb-2">Slide 2</h3>
+      <p class="text-slate-400 text-sm">Responsive breakpoints built-in.</p>
+    </div>
+    <div class="swiper-slide bg-slate-900 border border-slate-800 p-8 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-white mb-2">Slide 3</h3>
+      <p class="text-slate-400 text-sm">Silky smooth Swiper animations.</p>
+    </div>
+  </div>
+
+  <!-- Optional Controls -->
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+```
+
+### 2. Auto Initialization (Vanilla JS / Vite)
+
+Initialize all `.swiper` instances automatically on DOM load:
+
+```typescript
+import Swiper from 'swiper';
+import {
+  Navigation, Pagination, Autoplay, Scrollbar,
+  EffectFade, EffectCoverflow, EffectCards,
+  EffectCube, EffectFlip, EffectCreative
+} from 'swiper/modules';
+import { initTailwindSwipers } from 'tailwindcss-slider';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Register Swiper modules
+Swiper.use([
+  Navigation, Pagination, Autoplay, Scrollbar,
+  EffectFade, EffectCoverflow, EffectCards,
+  EffectCube, EffectFlip, EffectCreative
+]);
+
+// Auto-detect and parse utility classes on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  initTailwindSwipers(Swiper);
+});
+```
+
+---
+
+## ⚛️ React Integration
+
+Use the plugin inside your React components effortlessly:
+
+```tsx
+import React, { useEffect, useRef } from 'react';
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { parseSwiperClasses } from 'tailwindcss-slider';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+export function ReactSlider() {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (sliderRef.current) {
+      const options = parseSwiperClasses(sliderRef.current);
+      options.modules = [Navigation, Pagination, Autoplay];
+      const swiper = new Swiper(sliderRef.current, options);
+
+      return () => swiper.destroy(true, true);
+    }
+  }, []);
+
+  return (
+    <div 
+      ref={sliderRef} 
+      className="swiper swiper-loop swiper-autoplay swiper-slides-per-view-1 md:swiper-slides-per-view-3 swiper-space-x-4 swiper-theme-violet w-full"
+    >
+      <div className="swiper-wrapper">
+        <div className="swiper-slide bg-slate-900 border border-slate-800 p-6 rounded-2xl">Slide 1</div>
+        <div className="swiper-slide bg-slate-900 border border-slate-800 p-6 rounded-2xl">Slide 2</div>
+        <div className="swiper-slide bg-slate-900 border border-slate-800 p-6 rounded-2xl">Slide 3</div>
+      </div>
+      <div className="swiper-pagination" />
+      <div className="swiper-button-prev" />
+      <div className="swiper-button-next" />
+    </div>
+  );
 }
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 🎨 Complete Tailwind Utility Reference
+
+### General & Behavior
+| Utility Class | Swiper Option Equivalent | Description |
+| :--- | :--- | :--- |
+| `swiper-loop` | `loop: true` | Enables continuous infinite loop mode |
+| `swiper-autoplay` | `autoplay: true` | Enables automatic slide cycling (3000ms default) |
+| `swiper-autoplay-delay-[ms]` | `autoplay.delay: [ms]` | Custom delay interval in ms (e.g. `swiper-autoplay-delay-5000`) |
+| `swiper-autoplay-pause` | `pauseOnMouseEnter: true` | Pauses autoplay when mouse hovers over slider |
+| `swiper-autoplay-stop-last` | `stopOnLastSlide: true` | Stops autoplay upon reaching the final slide |
+| `swiper-speed-[ms]` | `speed: [ms]` | Transition duration in ms (default: `300`) |
+| `swiper-centered` | `centeredSlides: true` | Centers the active slide in container |
+| `swiper-mousewheel` | `mousewheel: true` | Enables mouse wheel scrolling navigation |
+| `swiper-keyboard` | `keyboard: true` | Enables arrow key keyboard navigation |
+
+### Layout & Spacing
+| Utility Class | Swiper Option Equivalent | Description |
+| :--- | :--- | :--- |
+| `swiper-slides-per-view-[n]` | `slidesPerView: n \| 'auto'` | Number of slides visible (`1`, `2`, `3`, `4`, `auto`) |
+| `md:swiper-slides-per-view-2` | `breakpoints: { 768: { slidesPerView: 2 } }` | Responsive breakpoint override (`sm`, `md`, `lg`, `xl`) |
+| `swiper-space-x-[n]` | `spaceBetween: px` | Slide gap (`0`, `2`, `4`, `6`, `8`, `10`, `12`) |
+
+### Visual & 3D Transition Effects
+| Utility Class | Effect Type | Description |
+| :--- | :--- | :--- |
+| `swiper-effect-slide` | `slide` | Standard horizontal sliding transition |
+| `swiper-effect-fade` | `fade` | Smooth crossfade opacity transition |
+| `swiper-effect-coverflow` | `coverflow` | 3D coverflow depth perspective effect |
+| `swiper-effect-cards` | `cards` | Stacked swipeable card deck physics |
+| `swiper-effect-cube` | `cube` | 3D rotating box cube transition |
+| `swiper-effect-flip` | `flip` | 3D flip card transition |
+| `swiper-effect-creative-stack` | `creative` | Modern depth stack scaling transition |
+| `swiper-effect-creative-zoom` | `creative` | Zoom-out parallax transition into Z-space |
+
+### Color Themes
+| Utility Class | Theme Accent | Navigation & Bullet Colors |
+| :--- | :--- | :--- |
+| `swiper-theme-primary` | Blue Accent | `#3b82f6` |
+| `swiper-theme-emerald` | Emerald Green Accent | `#10b981` |
+| `swiper-theme-rose` | Rose Accent | `#f43f5e` |
+| `swiper-theme-violet` | Violet Accent | `#8b5cf6` |
+| `swiper-theme-amber` | Amber Accent | `#f59e0b` |
+| `swiper-theme-indigo` | Indigo Accent | `#6366f1` |
+| `swiper-theme-slate` | Slate Neutral Accent | `#94a3b8` |
+
+---
+
+## 🎨 Built-In Presets & Examples
+
+### Hero Carousel (Fade Effect)
+```html
+<div class="swiper swiper-loop swiper-autoplay swiper-speed-800 swiper-effect-fade swiper-theme-violet w-full h-[450px]">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide bg-gradient-to-tr from-slate-950 to-violet-950 p-12">
+      <h2 class="text-4xl font-bold text-white">Hero Slide 1</h2>
+    </div>
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
+```
+
+### Product Slider (Multi-Column Grid)
+```html
+<div class="swiper swiper-loop swiper-space-x-4 swiper-slides-per-view-1 md:swiper-slides-per-view-2 lg:swiper-slides-per-view-3 swiper-theme-emerald">
+  <div class="swiper-wrapper">
+    <!-- Products -->
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
+```
+
+### 3D Gallery (Coverflow Effect)
+```html
+<div class="swiper swiper-loop swiper-effect-coverflow swiper-centered swiper-slides-per-view-auto swiper-theme-primary">
+  <div class="swiper-wrapper">
+    <!-- 3D Gallery Cards -->
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
+```
+
+---
+
+## 📜 License
+
+Distributed under the [MIT License](LICENSE).
+
+

@@ -1,8 +1,42 @@
 {
   "name": "tailwindcss-slider",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "Declarative zero-JS responsive Swiper plugin for Tailwind CSS",
+  "main": "./plugin/tailwind-swiper-plugin.cjs",
+  "module": "./plugin/swiper-init.ts",
+  "types": "./plugin/swiper-init.ts",
+  "exports": {
+    ".": {
+      "import": "./plugin/swiper-init.ts",
+      "types": "./plugin/swiper-init.ts"
+    },
+    "./plugin": "./plugin/tailwind-swiper-plugin.cjs"
+  },
+  "files": [
+    "plugin",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "tailwindcss",
+    "tailwind",
+    "swiper",
+    "slider",
+    "carousel",
+    "plugin",
+    "declarative",
+    "responsive"
+  ],
+  "author": "Sneh Moradia",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnehMoradia/tailwindcss-slider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SnehMoradia/tailwindcss-slider/issues"
+  },
+  "homepage": "https://github.com/SnehMoradia/tailwindcss-slider#readme",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
