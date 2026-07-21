@@ -23,10 +23,10 @@ Easily create responsive, animated, themeable touch sliders using **pure Tailwin
 
 ## 📦 Installation
 
-Install `swiper` and `tailwindcss-slider` in your project:
+Install `swiper` and `tailwindcss-swiper-slider` in your project:
 
 ```bash
-npm install swiper tailwindcss-slider
+npm install swiper tailwindcss-swiper-slider
 ```
 
 Add the plugin to your `tailwind.config.cjs` (or `tailwind.config.js`):
@@ -39,7 +39,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('tailwindcss-slider/plugin'),
+    require('tailwindcss-swiper-slider/plugin'),
   ],
 };
 ```
@@ -87,7 +87,7 @@ import {
   EffectFade, EffectCoverflow, EffectCards,
   EffectCube, EffectFlip, EffectCreative
 } from 'swiper/modules';
-import { initTailwindSwipers } from 'tailwindcss-slider';
+import { initTailwindSwipers } from 'tailwindcss-swiper-slider';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -116,7 +116,7 @@ Use the plugin inside your React components effortlessly:
 import React, { useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { parseSwiperClasses } from 'tailwindcss-slider';
+import { parseSwiperClasses } from 'tailwindcss-swiper-slider';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
