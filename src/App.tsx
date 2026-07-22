@@ -278,7 +278,18 @@ export default function App() {
     }
     if (presetSwiperRef.current) {
       const t = setTimeout(() => {
-        const options = parseSwiperClasses(presetSwiperRef.current!);
+        const options = parseSwiperClasses(presetSwiperRef.current!, [
+          SwiperNavigation,
+          SwiperPagination,
+          SwiperAutoplay,
+          SwiperScrollbar,
+          EffectFade,
+          EffectCoverflow,
+          EffectCards,
+          EffectCube,
+          EffectFlip,
+          EffectCreative
+        ]);
         try { presetSwiperInstanceRef.current = new Swiper(presetSwiperRef.current!, options); }
         catch (err) { console.error('Preset Swiper init failed', err); }
       }, 100);

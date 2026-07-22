@@ -29,12 +29,12 @@ Install `swiper` and `tailwindcss-swiper-slider` in your project:
 npm install swiper tailwindcss-swiper-slider
 ```
 
-Add the plugin to your `tailwind.config.cjs` (or `tailwind.config.js`):
+Add the plugin to your `tailwind.config.js` (or `tailwind.config.cjs`):
 
 ```javascript
-// tailwind.config.cjs
+// tailwind.config.js
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}", "./index.html"],
   theme: {
     extend: {},
   },
@@ -42,6 +42,11 @@ module.exports = {
     require('tailwindcss-swiper-slider/plugin'),
   ],
 };
+```
+
+#### Tailwind CLI Build Command:
+```bash
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 ```
 
 ---
@@ -78,6 +83,11 @@ Simply attach your slider configuration classes directly to the root `.swiper` e
 
 ### 2. Auto Initialization (Vanilla JS / Vite)
 
+Make sure your `<script>` tag in `index.html` has **`type="module"`**:
+```html
+<script type="module" src="./src/main.js"></script>
+```
+
 Initialize all `.swiper` instances automatically on DOM load:
 
 ```typescript
@@ -104,6 +114,19 @@ Swiper.use([
 document.addEventListener('DOMContentLoaded', () => {
   initTailwindSwipers(Swiper);
 });
+```
+
+### 3. Plain HTML / Live Server (No Bundler / CDN)
+
+If you are using plain HTML or Live Server without a bundler, include Swiper CDN scripts and the plugin's global script tag (`swiper-init.global.js`). **Zero `import` statements required!**
+
+```html
+<!-- Swiper CSS & CDN JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Standalone Tailwind Swiper Auto-Initializer (Global IIFE) -->
+<script src="./node_modules/tailwindcss-swiper-slider/plugin/swiper-init.global.js"></script>
 ```
 
 ---

@@ -39,8 +39,8 @@
   "homepage": "https://github.com/SnehMoradia/tailwindcss-slider#readme",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && tsc plugin/swiper-init.ts --declaration --target es2020 --module esnext --moduleResolution bundler --skipLibCheck --ignoreConfig && vite build",
-    "build:plugin": "tsc plugin/swiper-init.ts --declaration --target es2020 --module esnext --moduleResolution bundler --skipLibCheck --ignoreConfig",
+    "build": "tsc -b && npm run build:plugin && vite build",
+    "build:plugin": "tsc plugin/swiper-init.ts --declaration --target es2020 --module esnext --moduleResolution bundler --skipLibCheck --ignoreConfig && npx esbuild plugin/swiper-init.ts --outfile=plugin/swiper-init.global.js --format=iife --global-name=TailwindSwiper",
     "lint": "oxlint",
     "preview": "vite preview"
   },
