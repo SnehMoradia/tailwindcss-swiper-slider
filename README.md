@@ -17,7 +17,7 @@ Easily create responsive, animated, themeable touch sliders using **pure Tailwin
 * **🎨 Custom Color Themes**: Built-in dynamic theme classes (`swiper-theme-primary`, `swiper-theme-emerald`, `swiper-theme-rose`, `swiper-theme-violet`, `swiper-theme-amber`, `swiper-theme-indigo`, `swiper-theme-slate`).
 * **⚡ 3D & Transition Effects**: Full support for `slide`, `fade`, `coverflow`, `cards`, `cube`, `flip`, and `creative` transitions.
 * **⚛️ Framework Agnostic**: Works seamlessly with **HTML / Vite**, **React**, **Next.js**, **Vue**, or vanilla JS apps.
-* **🛠️ Interactive Dashboard & Configurator**: Ships with an interactive Vite + React playground dashboard to build, preview, and export copy-paste code snippets in real time!
+* **🛠️ Dynamic Live Code Export**: Configurator sidebar settings continuously update HTML, React/JSX, JS Init, and Tailwind Config code blocks in real time with precise slide counts, styles, responsive classes, and controls!
 
 ---
 
