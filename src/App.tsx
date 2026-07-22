@@ -227,6 +227,38 @@ export default function App() {
     return c.join(' ');
   };
 
+  const getSwiperClassesForExport = () => {
+    const c = ['swiper', `swiper-theme-${themeColor}`];
+    const is3DNoLoop = ['cards', 'coverflow'].includes(effect);
+    if (loop && !is3DNoLoop) c.push('swiper-loop');
+    if (speed !== 300) c.push(`swiper-speed-${speed}`);
+    if (effect !== 'slide') c.push(`swiper-effect-${effect}`);
+    
+    // Space-x and per-view classes
+    if (effect === 'slide') {
+      if (spaceBetween !== '0') c.push(`swiper-space-x-${spaceBetween}`);
+      if (centered) c.push('swiper-centered');
+
+      c.push(`swiper-slides-per-view-${spvMobile}`);
+      if (spvTablet !== spvMobile) {
+        c.push(`md:swiper-slides-per-view-${spvTablet}`);
+      }
+      if (spvDesktop !== spvTablet) {
+        c.push(`lg:swiper-slides-per-view-${spvDesktop}`);
+      }
+    } else if (effect === 'coverflow') {
+      c.push('swiper-centered');
+    }
+
+    if (autoplay && !is3DNoLoop) {
+      c.push('swiper-autoplay');
+      if (autoplayDelay !== 3000) c.push(`swiper-autoplay-delay-${autoplayDelay}`);
+      if (autoplayPause) c.push('swiper-autoplay-pause');
+      if (autoplayStopLast && !loop) c.push('swiper-autoplay-stop-last');
+    }
+    return c.join(' ');
+  };
+
   const getPaginationClasses = () => {
     const c = ['swiper-pagination'];
     if (paginationType === 'progressbar') c.push('swiper-pagination-progressbar');
@@ -330,29 +362,80 @@ export default function App() {
 
   // Code Generation Helpers
   const generateHTMLMarkup = () => {
-    const sc = getSwiperClasses();
+    const sc = getSwiperClassesForExport();
     const pc = getPaginationClasses();
+
+    const slideElements = Array.from({ length: slideCount })
+      .map((_, i) => {
+        const slideIndex = i + 1;
+        if (slideStyle === 'image') {
+          return `    <div class="swiper-slide relative bg-gradient-to-br from-violet-950 via-slate-900 to-indigo-950 border border-violet-500/40 rounded-2xl h-64 p-8 flex flex-col justify-end shadow-2xl overflow-hidden">
+      <span class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-1">Visual Banner</span>
+      <h3 class="text-2xl font-black text-white mb-2 leading-tight">Dynamic Slider Slide #${slideIndex}</h3>
+      <p class="text-xs text-slate-300">Responsive Tailwind CSS Swiper slider powered by zero JavaScript code.</p>
+    </div>`;
+        }
+
+        if (slideStyle === 'minimal') {
+          return `    <div class="swiper-slide rounded-2xl border border-slate-800 bg-slate-900 p-6 flex flex-col justify-between min-h-[220px] shadow-xl">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-bold text-blue-400">Card #${slideIndex}</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-white text-base mb-1">Minimal Slide Content #${slideIndex}</h4>
+        <p class="text-slate-400 text-xs">Clean lightweight card design optimized for performance.</p>
+      </div>
+      <div class="text-xs font-semibold text-blue-400">Learn more &rarr;</div>
+    </div>`;
+        }
+
+        return `    <div class="swiper-slide rounded-2xl border border-slate-800 bg-slate-900 p-6 flex flex-col items-center justify-center text-center gap-3 min-h-[220px] shadow-xl">
+      <h4 class="font-bold text-white text-base mb-1">Feature Slide #${slideIndex}</h4>
+      <p class="text-slate-400 text-xs">Declarative zero-JS slider responsive configuration.</p>
+    </div>`;
+      })
+      .join('\n');
+
     return `<div class="${sc} w-full rounded-2xl overflow-hidden py-8 px-12">
   <div class="swiper-wrapper">
-    <div class="swiper-slide flex flex-col items-center justify-center p-8 bg-slate-900 border border-slate-800 rounded-xl h-64 text-center">
-      <h3 class="text-xl font-bold text-white mb-2">Declarative Slide 1</h3>
-      <p class="text-slate-400 text-sm">Configured purely using HTML Tailwind classes!</p>
-    </div>
-    <div class="swiper-slide flex flex-col items-center justify-center p-8 bg-slate-900 border border-slate-800 rounded-xl h-64 text-center">
-      <h3 class="text-xl font-bold text-white mb-2">Declarative Slide 2</h3>
-      <p class="text-slate-400 text-sm">Responsive breakpoints and auto-initialization.</p>
-    </div>
-    <div class="swiper-slide flex flex-col items-center justify-center p-8 bg-slate-900 border border-slate-800 rounded-xl h-64 text-center">
-      <h3 class="text-xl font-bold text-white mb-2">Declarative Slide 3</h3>
-      <p class="text-slate-400 text-sm">Zero custom JavaScript configuration needed.</p>
-    </div>
+${slideElements}
   </div>
 ${pagination ? `  <div class="${pc}"></div>\n` : ''}${navigation ? `  <div class="swiper-button-prev"></div>\n  <div class="swiper-button-next"></div>\n` : ''}${scrollbar ? `  <div class="swiper-scrollbar"></div>\n` : ''}</div>`;
   };
 
   const generateReactMarkup = () => {
-    const sc = getSwiperClasses();
+    const sc = getSwiperClassesForExport();
     const pc = getPaginationClasses();
+
+    const slideJSX = Array.from({ length: slideCount })
+      .map((_, i) => {
+        const slideIndex = i + 1;
+        if (slideStyle === 'image') {
+          return `        <div className="swiper-slide relative bg-gradient-to-br from-violet-950 via-slate-900 to-indigo-950 border border-violet-500/40 rounded-2xl h-64 p-8 flex flex-col justify-end shadow-2xl overflow-hidden">
+          <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-1">Visual Banner</span>
+          <h3 className="text-2xl font-black text-white mb-2 leading-tight">Dynamic Slider Slide #${slideIndex}</h3>
+          <p className="text-xs text-slate-300">Responsive Tailwind CSS Swiper slider powered by zero JavaScript code.</p>
+        </div>`;
+        }
+
+        if (slideStyle === 'minimal') {
+          return `        <div className="swiper-slide rounded-2xl border border-slate-800 bg-slate-900 p-6 flex flex-col justify-between min-h-[220px] shadow-xl">
+          <span className="text-xs font-bold text-blue-400">Card #${slideIndex}</span>
+          <div>
+            <h4 className="font-bold text-white text-base mb-1">Minimal Slide Content #${slideIndex}</h4>
+            <p className="text-slate-400 text-xs">Clean lightweight card design optimized for performance.</p>
+          </div>
+          <div className="text-xs font-semibold text-blue-400">Learn more &rarr;</div>
+        </div>`;
+        }
+
+        return `        <div className="swiper-slide rounded-2xl border border-slate-800 bg-slate-900 p-6 flex flex-col items-center justify-center text-center gap-3 min-h-[220px] shadow-xl">
+          <h4 className="font-bold text-white text-base mb-1">Feature Slide #${slideIndex}</h4>
+          <p className="text-slate-400 text-xs">Declarative zero-JS slider responsive configuration.</p>
+        </div>`;
+      })
+      .join('\n');
+
     return `import React, { useEffect, useRef } from 'react';
 import Swiper from 'swiper';
 import { initTailwindSwipers } from './plugin/swiper-init';
@@ -370,18 +453,9 @@ export function CustomSlider() {
   return (
     <div ref={sliderRef} className="${sc} w-full rounded-2xl overflow-hidden py-8 px-12">
       <div className="swiper-wrapper">
-        <div className="swiper-slide bg-slate-900 border border-slate-800 p-8 rounded-xl text-center">
-          <h3 className="text-xl font-bold text-white mb-2">React Slide 1</h3>
-          <p className="text-slate-400 text-sm font-medium">Pure HTML class based configuration.</p>
-        </div>
-        <div className="swiper-slide bg-slate-900 border border-slate-800 p-8 rounded-xl text-center">
-          <h3 className="text-xl font-bold text-white mb-2">React Slide 2</h3>
-          <p className="text-slate-400 text-sm font-medium">Responsive & lightweight.</p>
-        </div>
+${slideJSX}
       </div>
-      ${pagination ? `<div className="${pc}" />` : ''}
-      ${navigation ? `<div className="swiper-button-prev" />\n      <div className="swiper-button-next" />` : ''}
-    </div>
+${pagination ? `      <div className="${pc}" />\n` : ''}${navigation ? `      <div className="swiper-button-prev" />\n      <div className="swiper-button-next" />\n` : ''}${scrollbar ? `      <div className="swiper-scrollbar" />\n` : ''}    </div>
   );
 }`;
   };
