@@ -45,9 +45,10 @@ interface BreakpointConfig {
 /**
  * Parses class list to generate Swiper configuration
  * @param element The Swiper container element
+ * @param customModules Optional array of Swiper modules to attach
  * @returns Swiper options
  */
-export function parseSwiperClasses(element: HTMLElement) {
+export function parseSwiperClasses(element: HTMLElement, customModules?: any[]) {
   const classes = Array.from(element.classList);
   
   // Default values
@@ -90,7 +91,9 @@ export function parseSwiperClasses(element: HTMLElement) {
   classes.forEach(cls => {
     // 1. Check for responsive classes (e.g. md:swiper-slides-per-view-3)
     if (cls.includes(':')) {
-      const [bp, classPart] = cls.split(':');
+      const parts = cls.split(':');
+      const bp = parts[parts.length - 2];
+      const classPart = parts[parts.length - 1];
       const bpWidth = TAILWIND_BREAKPOINTS[bp];
       
       if (bpWidth) {
@@ -322,14 +325,19 @@ export function parseSwiperClasses(element: HTMLElement) {
     options.breakpoints = breakpoints;
   }
 
+  if (customModules && customModules.length > 0) {
+    options.modules = customModules;
+  }
+
   return options;
 }
 
 /**
  * Automatically initializes all Swiper instances in the DOM
  * @param SwiperClass The Swiper constructor class
+ * @param modules Optional array of Swiper modules to attach
  */
-export function initTailwindSwipers(SwiperClass: any) {
+export function initTailwindSwipers(SwiperClass: any, modules?: any[]) {
   if (!SwiperClass) {
     console.error('Swiper class is required to initialize.');
     return;
@@ -343,7 +351,8 @@ export function initTailwindSwipers(SwiperClass: any) {
     // Avoid double initialization
     if ((htmlEl as any).swiper) return;
 
-    const options = parseSwiperClasses(htmlEl);
+    const activeModules = modules || SwiperClass.defaults?.modules;
+    const options = parseSwiperClasses(htmlEl, activeModules);
     try {
       const swiperInstance = new SwiperClass(htmlEl, options);
       instances.push(swiperInstance);
