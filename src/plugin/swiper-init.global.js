@@ -127,16 +127,16 @@ var TailwindSwiper = (() => {
       } else if (cls.startsWith("swiper-autoplay-delay-")) {
         autoplayEnabled = true;
         autoplayDelay = parseInt(cls.replace("swiper-autoplay-delay-", "")) || 3e3;
-      } else if (cls.startsWith("swiper-autoplay-pause")) {
+      } else if (cls === "swiper-autoplay-pause") {
         autoplayEnabled = true;
         autoplayPauseOnMouseEnter = true;
-      } else if (cls.startsWith("swiper-autoplay-stop-last")) {
+      } else if (cls === "swiper-autoplay-stop-last") {
         autoplayEnabled = true;
         autoplayStopOnLastSlide = true;
-      } else if (cls.startsWith("swiper-autoplay-interactive")) {
+      } else if (cls === "swiper-autoplay-interactive") {
         autoplayEnabled = true;
         autoplayDisableOnInteraction = false;
-      } else if (cls.startsWith("swiper-autoplay-no-interactive")) {
+      } else if (cls === "swiper-autoplay-no-interactive") {
         autoplayEnabled = true;
         autoplayDisableOnInteraction = true;
       }
@@ -232,6 +232,7 @@ var TailwindSwiper = (() => {
             rotate: [180, 0, 0]
           },
           next: {
+            shadow: true,
             translate: [0, 0, -800],
             rotate: [-180, 0, 0]
           }
