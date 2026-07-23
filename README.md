@@ -5,7 +5,7 @@ A **declarative, zero-JS configuration** Tailwind CSS plugin for [Swiper.js](htt
 Easily create responsive, animated, themeable touch sliders using **pure Tailwind utility classes** directly on your HTML elements—no tedious JS option objects required!
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-SnehMoradia%2Ftailwindcss--slider-181717?style=for-the-badge&logo=github)](https://github.com/SnehMoradia/tailwindcss-slider)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Tailwind%20Swiper%20Configurator-blue?style=for-the-badge&logo=vercel)](https://tailwindcss-slider.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Tailwind%20Swiper%20Configurator-blue?style=for-the-badge&logo=vercel)](https://tailwindcss-swiper-slider.vercel.app/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 ---
