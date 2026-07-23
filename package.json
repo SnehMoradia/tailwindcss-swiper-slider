@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-swiper-slider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Declarative zero-JS responsive Swiper plugin for Tailwind CSS",
   "main": "./plugin/tailwind-swiper-plugin.cjs",
   "module": "./plugin/swiper-init.js",
